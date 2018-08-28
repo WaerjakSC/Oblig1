@@ -3,13 +3,13 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-#include "node_template.h"
+#include "node_t.h"
 #include "stack.h"
 
 namespace ADS101 {
-int NodeTemplate::s_antall;
+int node_t::s_antall;
 
-NodeTemplate::NodeTemplate(char tegn, NodeTemplate* neste)
+node_t::node_t(char tegn, node_t* neste)
     : m_tegn(tegn), m_neste(neste)
 {
     //m_tegn = tegn;
@@ -17,39 +17,39 @@ NodeTemplate::NodeTemplate(char tegn, NodeTemplate* neste)
 
 }
 
-std::string NodeTemplate::toString() const
+std::string node_t::toString() const
 {
     std::ostringstream oss;
     oss << m_tegn;
     return oss.str();
 }
 
-NodeTemplate* NodeTemplate::hentNeste() const
+node_t* node_t::hentNeste() const
 {
     return m_neste;
 }
 
-void NodeTemplate::settNeste(NodeTemplate* c)
+void node_t::settNeste(node_t* c)
 {
     m_neste = c;
 }
-void NodeTemplate::skrivBaklengs() const
+void node_t::skrivBaklengs() const
 {
     if (m_neste)
         m_neste->skrivBaklengs();           // Main: liste->skrivBaklengs();
     std::cout << m_tegn;
 }
-int NodeTemplate::hentAntall()
+int node_t::hentAntall()
 {
     return s_antall;
 }
 
-NodeTemplate::~NodeTemplate()
+node_t::~node_t()
 {
     s_antall --;
 }
 
-char NodeTemplate::hentData() const
+char node_t::hentData() const
 {
     return m_tegn;
 }

@@ -1,15 +1,15 @@
 #include <QCoreApplication>
 #include "charnode.h"
 #include "stack.h"
-#include "node_template.h"
-#include "stack_template.h"
+#include "node_t.h"
+#include "stack_t.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    stack* liste = new stack('h');
+    std::unique_ptr<ADS101::stack> liste(new ADS101::stack('h'));
     liste->push('e');
     liste->push('l');
     liste->push('p');
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     // TODO: Put these couts into their own functions
     std::cout << "Current contents of stack: ";
-    for (ADS101::CharNode* p = liste->getHead(); p!=nullptr; p=p->hentNeste())
+    for (ADS101::node_template* p = liste->getHead(); p!=nullptr; p=p->hentNeste())
         std::cout << p->hentData();
 
 
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     liste->pop();
     liste->pop();
     std::cout << "\nCurrent contents of stack: ";
-    for (ADS101::CharNode* p = liste->getHead(); p!=nullptr; p=p->hentNeste())
+    for (ADS101::node_template* p = liste->getHead(); p!=nullptr; p=p->hentNeste())
         std::cout << p->hentData();
 
 
@@ -40,15 +40,9 @@ int main(int argc, char *argv[])
     liste->getHead()->skrivBaklengs();
     liste->empty();
     std::cout << "\nEmptied stack... ";
-    for (ADS101::CharNode* p = liste->getHead(); p!=nullptr; p=p->hentNeste())
+    for (ADS101::node_template* p = liste->getHead(); p!=nullptr; p=p->hentNeste())
         std::cout << p->hentData();
     std::cout << "\nSize of stack: " << liste->size();
 
-    //    // Slette den første i lista
-    //    ADS101::CharNode* ut = liste;
-    //    liste = liste->hentNeste();
-    //    delete ut;
-
-    //    std::cout << std::endl << "static antall: " << liste->hentAntall() << std::endl;
     return a.exec();
 }

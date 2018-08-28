@@ -1,9 +1,13 @@
 #include "stack.h"
 #include "charnode.h"
+#include <memory>
+#include <iostream>
 
+
+namespace ADS101 {
 stack::stack(char ch)
 {
-    head = new ADS101::CharNode(ch);
+    head = new node_template(ch);
 }
 /**
  * @brief stack::push
@@ -12,7 +16,7 @@ stack::stack(char ch)
  */
 void stack::push(char ch)
 {
-    ADS101::CharNode* tmp = new ADS101::CharNode(ch, head); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
+    node_template* tmp = new node_template(ch, head); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
     //  Make tmp's m_neste point to the top of the stack
     head = tmp; // Update the new head in stack class
 }
@@ -23,7 +27,13 @@ void stack::push(char ch)
  */
 char stack::top()
 {
-    return head->hentData();
+    if (head != nullptr)
+    {
+        return head->hentData();
+    }
+    std::cout << "Stack is empty.\n";
+    return 0;
+
 }
 /**
  * @brief stack::pop
@@ -34,19 +44,22 @@ char stack::pop()
 {
     if (head != nullptr) // If head is not a nullptr (won't run if stack is empty)
     {
-        ADS101::CharNode* tmp = head; // Create temporary object of type CharNode pointing to stack head
+        node_template* tmp = head; // Create temporary object of type CharNode pointing to stack head
         head = head->hentNeste(); // Set the head of the stack to point to the next item in the stack
         char ch = tmp->hentData(); // store the data in the item into a temporary char
         delete tmp; // delete the last pointer to that address
 
         return ch; // Return the char in case you want to know what you just deleted
     }
-    else return 0;
+
+    std::cout << "Stack is empty, nothing to pop.\n";
+    return 0;
+
 }
 
 void stack::empty()
 {
-    ADS101::CharNode* tmp=head; // Iterative process similar to pop
+    node_template* tmp=head; // Iterative process similar to pop
     while(tmp != nullptr)
     {
         head=head->hentNeste(); // Switch head to point to the next latest item in stack
@@ -66,9 +79,8 @@ int stack::size()
  * @brief stack::getHead
  * @return Getter for top of stack
  */
-ADS101::CharNode *stack::getHead()
+node_template *stack::getHead()
 {
     return head;
 }
-
-
+}

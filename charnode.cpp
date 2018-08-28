@@ -7,9 +7,9 @@
 #include "stack.h"
 
 namespace ADS101 {
-int CharNode::s_antall;
+int node_template::s_antall;
 
-CharNode::CharNode(char tegn, CharNode* neste)
+node_template::node_template(char tegn, node_template* neste)
     : m_tegn(tegn), m_neste(neste)
 {
     //m_tegn = tegn;
@@ -17,39 +17,39 @@ CharNode::CharNode(char tegn, CharNode* neste)
 
 }
 
-std::string CharNode::toString() const
+std::string node_template::toString() const
 {
     std::ostringstream oss;
     oss << m_tegn;
     return oss.str();
 }
 
-CharNode* CharNode::hentNeste() const
+node_template* node_template::hentNeste() const
 {
     return m_neste;
 }
 
-void CharNode::settNeste(CharNode* c)
+void node_template::settNeste(node_template* c)
 {
     m_neste = c;
 }
-void CharNode::skrivBaklengs() const
+void node_template::skrivBaklengs() const
 {
     if (m_neste)
         m_neste->skrivBaklengs();           // Main: liste->skrivBaklengs();
     std::cout << m_tegn;
 }
-int CharNode::hentAntall()
+int node_template::hentAntall()
 {
     return s_antall;
 }
 
-CharNode::~CharNode()
+node_template::~node_template()
 {
     s_antall --;
 }
 
-char CharNode::hentData() const
+char node_template::hentData() const
 {
     return m_tegn;
 }

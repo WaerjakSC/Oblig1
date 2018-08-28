@@ -18,8 +18,8 @@ SOURCES += \
         main.cpp \
     charnode.cpp \
     stack.cpp \
-    node_template.cpp \
-    stack_template.cpp
+    stack_t.cpp \
+    node_t.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -29,5 +29,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     charnode.h \
     stack.h \
-    node_template.h \
-    stack_template.h
+    stack_t.h \
+    node_t.h

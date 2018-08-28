@@ -6,21 +6,21 @@
 #include <string>
 
 namespace ADS101 {
-    class NodeTemplate
+    class node_t
     {
     public:
-        NodeTemplate(char tegn='0', NodeTemplate* neste=nullptr);
+        node_t(char tegn='0', node_t* neste=nullptr);
         std::string toString() const;
-        NodeTemplate* hentNeste() const;
-        void settNeste(NodeTemplate* c);
+        node_t* hentNeste() const;
+        void settNeste(node_t* c);
         void skrivBaklengs() const;
         static int hentAntall();
         char hentData() const;
-        ~NodeTemplate();
+        ~node_t();
     private:
         char m_tegn;            // Data-del
         static int s_antall;
-        NodeTemplate* m_neste;      // Datastruktur-del
+        node_t* m_neste;      // Datastruktur-del
     };
 }
 #endif // NODE_TEMPLATE_H

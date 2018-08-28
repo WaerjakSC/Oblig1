@@ -2,8 +2,8 @@
 #define STACK_H
 
 #include "charnode.h"
-
-
+#include <memory>
+namespace ADS101 {
 class stack
 {
 public:
@@ -13,9 +13,9 @@ public:
     char pop();
     void empty();
     int size();
-    ADS101::CharNode* getHead();
+    node_template* getHead();
 private:
-    ADS101::CharNode* head;
+    node_template* head;
 };
-
+}
 #endif // STACK_H

@@ -3,6 +3,7 @@
 
 #include "charnode.h"
 #include <memory>
+
 namespace ADS101 {
 class stack
 {
@@ -13,9 +14,9 @@ public:
     char pop();
     void empty();
     int size();
-    node_template* getHead();
+    CharNode* getHead();
 private:
-    node_template* head;
+    CharNode* head;
 };
 }
 #endif // STACK_H

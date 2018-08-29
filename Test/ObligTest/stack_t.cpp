@@ -1,6 +1,6 @@
 #include "stack_t.h"
 
-namespace ADS101
+stack_t::stack_t()
 {
 
 }

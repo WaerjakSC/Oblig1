@@ -1,5 +1,4 @@
 #include "stack.h"
-#include "charnode.h"
 #include <memory>
 #include <iostream>
 
@@ -7,7 +6,7 @@
 namespace ADS101 {
 stack::stack(char ch)
 {
-    head = new node_template(ch);
+    head = new CharNode(ch);
 }
 /**
  * @brief stack::push
@@ -16,7 +15,7 @@ stack::stack(char ch)
  */
 void stack::push(char ch)
 {
-    node_template* tmp = new node_template(ch, head); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
+    CharNode* tmp = new CharNode(ch, head); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
     //  Make tmp's m_neste point to the top of the stack
     head = tmp; // Update the new head in stack class
 }
@@ -44,7 +43,7 @@ char stack::pop()
 {
     if (head != nullptr) // If head is not a nullptr (won't run if stack is empty)
     {
-        node_template* tmp = head; // Create temporary object of type CharNode pointing to stack head
+        CharNode* tmp = head; // Create temporary object of type CharNode pointing to stack head
         head = head->hentNeste(); // Set the head of the stack to point to the next item in the stack
         char ch = tmp->hentData(); // store the data in the item into a temporary char
         delete tmp; // delete the last pointer to that address
@@ -59,7 +58,7 @@ char stack::pop()
 
 void stack::empty()
 {
-    node_template* tmp=head; // Iterative process similar to pop
+    CharNode* tmp=head; // Iterative process similar to pop
     while(tmp != nullptr)
     {
         head=head->hentNeste(); // Switch head to point to the next latest item in stack
@@ -79,7 +78,7 @@ int stack::size()
  * @brief stack::getHead
  * @return Getter for top of stack
  */
-node_template *stack::getHead()
+CharNode *stack::getHead()
 {
     return head;
 }

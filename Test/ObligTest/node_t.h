@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "stack_t.h"
 
 namespace ADS101 {
 
@@ -15,9 +16,10 @@ private:
     static int s_antall;
     Node_t* m_neste;      // Datastruktur-del
 public:
-    Node_t(T tegn = 0, Node_t* neste = nullptr)
+    Node_t(T tegn, Node_t* neste)
         : m_tegn(tegn), m_neste(neste)
     {
+        //m_tegn = tegn;
         s_antall ++;
     }
     ~Node_t()
@@ -30,9 +32,16 @@ public:
         oss << m_tegn;
         return oss.str();
     }
-    Node_t* hentNeste() const { return m_neste; }
 
-    void settNeste(Node_t* c) { m_neste = c; }
+    Node_t* hentNeste() const
+    {
+        return m_neste;
+    }
+
+    void settNeste(Node_t* c)
+    {
+        m_neste = c;
+    }
 
     void skrivBaklengs() const
     {
@@ -41,9 +50,15 @@ public:
         std::cout << m_tegn;
     }
 
-    int hentAntall() { return s_antall; }
+    int hentAntall()
+    {
+        return s_antall;
+    }
 
-    T hentData() const { return m_tegn; }
+    T hentData() const
+    {
+        return m_tegn;
+    }
 
 };
 }

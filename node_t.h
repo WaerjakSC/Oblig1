@@ -4,17 +4,18 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include "charnode.h"
 
 namespace ADS101 {
 
 template<class T>
-class Node_t
+class Node_t : public CharNode
 {
 private:
     T m_tegn;            // Data-del
-    Node_t* m_neste;      // Datastruktur-del
+    Node_t<T>* m_neste;      // Datastruktur-del
 public:
-    Node_t(T tegn = '0', Node_t* neste = nullptr)
+    Node_t(T tegn, Node_t<T>* neste = nullptr)
         : m_tegn(tegn), m_neste(neste)
     {
     }

@@ -7,16 +7,15 @@
 #include <iostream>
 
 namespace ADS101{
-class stack;
 
 template<class T>
-class stack_t : public stack
+class stack_t
 {
 private:
     Node_t<T>* head;
     int m_size{ 1 };
 public:
-    stack_t(const T& ch= '0')
+    stack_t(const T& ch)
     {
 
         head = new Node_t<T>(ch);
@@ -30,7 +29,7 @@ public:
     void push(const T& ch)
     {
         m_size++;
-        std::unique_ptr<Node_t<T>> tmp(new Node_t<T>(ch, head)); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
+        std::unique_ptr<Node_t<T>> tmp(new Node_t<T>(ch)); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
         //  Make tmp's m_neste point to the top of the stack
         head = tmp.get(); // Update the new head in stack class
     }
@@ -91,8 +90,13 @@ public:
     template<typename T2>
     friend std::ostream& operator<< (std::ostream &out, const stack_t<T2> &stack)
     {
-        out << stack.head->hentData();
+        out << "\nCurrent contents of stack: ";
+        for (Node_t<T2>* p = stack.head; p!=nullptr; p=p->hentNeste())
+            out << p->hentData();
 
+        out << "\nWritten backwards: ";
+        stack.head->skrivBaklengs();
+        out <<'\n';
         return out;
     }
 

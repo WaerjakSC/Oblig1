@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
     {
         liste.push(i);
     }
+    liste.push(70);
 
 
 //    std::cout << "Current contents of stack: ";
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
 
     std::cout << "Top is: " << liste.top() << '\n';
     std::cout << "Size of stack: " << liste.size();
+    std::cout << liste;
 
 //    liste.pop();
 //    liste.pop();

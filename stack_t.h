@@ -4,6 +4,7 @@
 #include "node_t.h"
 #include "stack.h"
 #include <memory>
+#include <stdexcept>
 #include <iostream>
 
 namespace ADS101{
@@ -13,25 +14,57 @@ class stack_t
 {
 private:
     Node_t<T>* head;
-    int m_size{ 1 };
+    bool isEmpty() const { return head == nullptr; }
 public:
+    stack_t() : head(){}
     stack_t(const T& ch)
     {
 
         head = new Node_t<T>(ch);
     }
+    stack_t(const stack_t &other) : head()
+    {
+        if (other.isEmpty())
+        { return; }
+
+        head = new Node_t<T>(*other.head);
+    }
+    ~stack_t() {
+        delete head;
+    }
+
+    stack_t &operator= (const stack_t &other)
+    {
+        if (this == &other){
+            return *this;
+        }
+
+        Node_t<T>* newTop = nullptr;
+        if (!other.isEmpty()){
+            newTop = new Node_t<T>(*other.head);
+        }
+        delete head;
+        head = newTop;
+
+        return *this;
+    }
+
+
     /**
      * @brief push
      * @param ch
      * Add a new item to the stack
-     * Why does this make the template go crazy? Something to do with Node_t or stack_t?
      */
     void push(const T& ch)
     {
-        m_size++;
-        std::unique_ptr<Node_t<T>> tmp(new Node_t<T>(ch)); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
-        //  Make tmp's m_neste point to the top of the stack
-        head = tmp.get(); // Update the new head in stack class
+        if (isEmpty()) // If stack is empty, set head variable to point to a node with value ch
+        {
+            head = new Node_t<T>(ch);
+        }
+        else // otherwise, go deeper and have the node use its own push to add it from there
+        {
+            head->push(ch);
+        }
     }
 
     /**
@@ -41,63 +74,77 @@ public:
      */
     T top()
     {
-        if (head != nullptr)
+        if (isEmpty())
         {
-            return head->hentData();
+            std::cout << "Stack is empty.\n";
+            return 0;
         }
-        std::cout << "Stack is empty.\n";
-        return 0;
+        return head->hentData();
     }
-    Node_t<T>* getHead() { return head; }
     /**
      * @brief pop
      * @return
      * Removes the last item entered into the stack and reads its contents into a variable if needed
+     * Stack is only a shallow container for the nodes. Owns the top node, every other node is owned by successive nodes
+     * Thus any functions that call nodes other than top will need to go deeper and use functions in Node_t
      */
-    T pop()
-    {
-        if (head != nullptr) // If head is not a nullptr (won't run if stack is empty)
-        {
-            Node_t<T>* tmp = head; // Create temporary object of type CharNode pointing to stack head
-            head = head->hentNeste(); // Set the head of the stack to point to the next item in the stack
-            T ch = tmp->hentData(); // store the data in the item into a temporary container
-            delete tmp; // delete the last pointer to that address
+    T pop(){
+        T result = top();
 
-            return ch; // Return ch in case you want to know what you just deleted
+        if (head->isLast()){ // if this is the last item to pop, delete the pointer and set head to a nullptr
+            delete head;
+            head = nullptr;
         }
-        std::cout << "Stack is empty, nothing to pop.\n";
-        return 0;
+        else { // Else follow head to the Node_t class and pop it from there
+            head->pop();
+        }
+        // returns item popped in case function was right-value for variable
+        return result;
     }
+
     void empty()
     {
-        Node_t<T>* tmp=head; // Iterative process similar to pop
-        while(tmp != nullptr)
+        for(int i = -2; i <= head->getSize(); i++)
         {
-            head=head->hentNeste(); // Switch head to point to the next latest item in stack
-            delete tmp; // Delete/free up the address tmp is attached to (leaving no pointers to that address)
-            tmp= head; // repeat process
+            if (head == nullptr)
+            { break; }
+            if (head->hentNeste() == nullptr){ // if this is the last item to pop, delete the pointer and set head to a nullptr
+                delete head;
+                head = nullptr;
+            }
+            else { // Else follow head to the Node_t class and pop it from there
+                head->pop();
+            }
         }
     }
     /**
-     * @brief stack::size
+     * @brief size
      * @return Returns the total size of the stack
      */
-    int size() { return m_size; }
-    /**
-     * @brief stack::getHead
-     * @return Getter for top of stack
-     */
-    template<typename T2>
-    friend std::ostream& operator<< (std::ostream &out, const stack_t<T2> &stack)
-    {
-        out << "\nCurrent contents of stack: ";
-        for (Node_t<T2>* p = stack.head; p!=nullptr; p=p->hentNeste())
-            out << p->hentData();
+    int size() const{
+        if (isEmpty()){ return 0; }
+        return head->getSize();
+    }
 
-        out << "\nWritten backwards: ";
-        stack.head->skrivBaklengs();
-        out <<'\n';
-        return out;
+    // Overload the << operator so that using "stackName" in cout will use this function instead
+    friend std::ostream& operator<< (std::ostream &out, const stack_t<T> &stack)
+    {
+        if (stack.head != nullptr)
+        {
+            out << "\nCurrent contents of stack: ";
+            for (Node_t<T>* p = stack.head; p!=nullptr; p=p->hentNeste())
+                out << p->hentData() << " ";
+
+            out << "\nWritten backwards: ";
+            stack.head->skrivBaklengs();
+            out <<'\n';
+            return out;
+        }
+        else {
+            out << "\nStack is empty!";
+            return out;
+        }
+
     }
 
 };

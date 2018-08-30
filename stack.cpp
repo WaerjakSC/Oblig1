@@ -15,7 +15,7 @@ stack::stack(char ch)
  */
 void stack::push(char ch)
 {
-    CharNode* tmp = new CharNode(ch); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
+    CharNode* tmp = new CharNode(ch, head); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
     //  Make tmp's m_neste point to the top of the stack
     head = tmp; // Update the new head in stack class
 }

@@ -2,16 +2,19 @@
 #define STACK_T_H
 
 #include "node_t.h"
+#include "stack.h"
 #include <memory>
 #include <iostream>
 
 namespace ADS101{
+class stack;
+
 template<class T>
-class stack_t
+class stack_t : public stack
 {
 private:
     Node_t<T>* head;
-    int m_size{ 0 };
+    int m_size{ 1 };
 public:
     stack_t(const T& ch= '0')
     {
@@ -26,6 +29,7 @@ public:
      */
     void push(const T& ch)
     {
+        m_size++;
         std::unique_ptr<Node_t<T>> tmp(new Node_t<T>(ch, head)); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
         //  Make tmp's m_neste point to the top of the stack
         head = tmp.get(); // Update the new head in stack class

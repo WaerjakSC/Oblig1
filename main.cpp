@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     ADS101::stack_t<int> liste(1);
-    for (int i = 1; i<5; i++)
+    for (int i = 2; i<6; i++)
     {
         liste.push(i);
     }

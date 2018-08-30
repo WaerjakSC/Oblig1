@@ -14,7 +14,7 @@ private:
     T m_tegn;            // Data-del
     Node_t* m_neste;      // Datastruktur-del
 public:
-    Node_t(T tegn = 0, Node_t* neste = nullptr)
+    Node_t(T tegn = '0', Node_t* neste = nullptr)
         : m_tegn(tegn), m_neste(neste)
     {
     }

@@ -12,17 +12,14 @@ class Node_t
 {
 private:
     T m_tegn;            // Data-del
-    static int s_antall;
     Node_t* m_neste;      // Datastruktur-del
 public:
     Node_t(T tegn = 0, Node_t* neste = nullptr)
         : m_tegn(tegn), m_neste(neste)
     {
-        s_antall ++;
     }
     ~Node_t()
     {
-        s_antall --;
     }
     std::string toString() const
     {
@@ -40,9 +37,6 @@ public:
             m_neste->skrivBaklengs();           // Main: liste->skrivBaklengs();
         std::cout << m_tegn;
     }
-
-    int hentAntall() { return s_antall; }
-
     T hentData() const { return m_tegn; }
 
 };

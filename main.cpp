@@ -10,36 +10,37 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     ADS101::stack_t<int> liste(1);
-    liste.push(2);
-    liste.push(3);
-    liste.push(4);
-    liste.push(5);
+    for (int i = 1; i<5; i++)
+    {
+        liste.push(i);
+    }
 
-    std::cout << "Current contents of stack: ";
-    for (ADS101::Node_t<int>* p = liste.getHead(); p!=nullptr; p=p->hentNeste())
-        std::cout << p->hentData();
 
-    std::cout << "\nWritten backwards: ";
-    liste.getHead()->skrivBaklengs();
-    std::cout <<'\n';
+//    std::cout << "Current contents of stack: ";
+//    for (ADS101::Node_t<int>* p = liste.getHead(); p!=nullptr; p=p->hentNeste())
+//        std::cout << p->hentData();
+
+//    std::cout << "\nWritten backwards: ";
+//    liste.getHead()->skrivBaklengs();
+//    std::cout <<'\n';
 
     std::cout << "Top is: " << liste.top() << '\n';
     std::cout << "Size of stack: " << liste.size();
 
-    liste.pop();
-    liste.pop();
-    std::cout << "\nCurrent contents of stack: ";
-    for (ADS101::Node_t<int>* p = liste.getHead(); p!=nullptr; p=p->hentNeste())
-        std::cout << p->hentData();
+//    liste.pop();
+//    liste.pop();
+//    std::cout << "\nCurrent contents of stack: ";
+//    for (ADS101::Node_t<int>* p = liste.getHead(); p!=nullptr; p=p->hentNeste())
+//        std::cout << p->hentData();
 
 
-    std::cout << "\nWritten backwards: ";
-    liste.getHead()->skrivBaklengs();
-    liste.empty();
-    std::cout << "\nEmptied stack... ";
-    for (ADS101::Node_t<int>* p = liste.getHead(); p!=nullptr; p=p->hentNeste())
-        std::cout << p->hentData();
-    std::cout << "\nSize of stack: " << liste.size();
+//    std::cout << "\nWritten backwards: ";
+//    liste.getHead()->skrivBaklengs();
+//    liste.empty();
+//    std::cout << "\nEmptied stack... ";
+//    for (ADS101::Node_t<int>* p = liste.getHead(); p!=nullptr; p=p->hentNeste())
+//        std::cout << p->hentData();
+//    std::cout << "\nSize of stack: " << liste.size();
     return a.exec();
 }
 

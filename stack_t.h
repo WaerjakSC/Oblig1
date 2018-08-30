@@ -9,15 +9,20 @@ namespace ADS101{
 template<class T>
 class stack_t
 {
+private:
+    Node_t<T>* head;
+    int m_size{ 0 };
 public:
     stack_t(const T& ch= '0')
     {
+
         head = new Node_t<T>(ch);
     }
     /**
      * @brief push
      * @param ch
      * Add a new item to the stack
+     * Why does this make the template go crazy? Something to do with Node_t or stack_t?
      */
     void push(const T& ch)
     {
@@ -40,6 +45,7 @@ public:
         std::cout << "Stack is empty.\n";
         return 0;
     }
+    Node_t<T>* getHead() { return head; }
     /**
      * @brief pop
      * @return
@@ -73,14 +79,19 @@ public:
      * @brief stack::size
      * @return Returns the total size of the stack
      */
-    int size() { return head->hentAntall(); }
+    int size() { return m_size; }
     /**
      * @brief stack::getHead
      * @return Getter for top of stack
      */
-    Node_t<T>* getHead() { return head; }
-private:
-    Node_t<T>* head;
+    template<typename T2>
+    friend std::ostream& operator<< (std::ostream &out, const stack_t<T2> &stack)
+    {
+        out << stack.head->hentData();
+
+        return out;
+    }
+
 };
 }
 

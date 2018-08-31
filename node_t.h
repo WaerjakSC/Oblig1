@@ -11,75 +11,85 @@ template<class T>
 class Node_t
 {
 private:
-    T m_tegn;            // Data-del
-    Node_t<T>* m_neste;      // Datastruktur-del
+    T m_val;            // Data-del
+    Node_t<T>* m_prev;      // Datastruktur-del
 public:
-    Node_t(T tegn, Node_t<T>* neste = nullptr)
-        : m_tegn(tegn), m_neste(neste)
+    Node_t(T val, Node_t<T>* neste = nullptr)
+        : m_val(val), m_prev(neste)
     {
     }
     ~Node_t()
     {
-        delete m_neste;
+        delete m_prev;
     }
-    Node_t(const Node_t &other) : m_tegn(*other.m_tegn), m_neste(0)
-    {
-        if (other.m_neste != 0)
-        {
-            m_neste = new Node_t<T>(*other.tail);
-        }
-    }
+    /**
+     * @brief toString
+     * @return
+     * Read contents of each node into an ostringstream
+     */
     std::string toString() const
     {
         std::ostringstream oss;
-        oss << m_tegn;
+        oss << m_val;
         return oss.str();
     }
-    Node_t* hentNeste() const { return m_neste; }
+    /**
+     * @brief getPrev
+     * @return next node in line
+     */
+    Node_t* getPrev() const { return m_prev; }
 
-    void settNeste(Node_t* c) { m_neste = c; }
-
-    void skrivBaklengs() const
+    /**
+     * @brief printReversed
+     * Output contents of nodes in reverse order, useful for collection of chars in a string-like order
+     */
+    void printReversed() const
     {
-        if (m_neste)
-            m_neste->skrivBaklengs();           // Main: liste->skrivBaklengs();
-        std::cout << m_tegn << " ";
+        if (m_prev)
+            m_prev->printReversed();
+        std::cout << m_val << " ";
     }
-    Node_t& operator= (const Node_t& other)
-    {
-        if (this == &other)
-        {
-            return *this;
-        }
-        Node_t<T>* oldTop = m_neste;
-        m_neste = new Node_t<T>(*other.m_neste);
-        delete oldTop;
-
-        m_tegn = other.m_tegn;
-
-        return *this;
-    }
+    /**
+     * @brief pop
+     * @return
+     * Removes the last item entered into the node collection
+     * Stack is only a shallow container for the nodes. Owns the top node, every other node is owned by successive nodes
+     * Thus any functions that call nodes other than top will need to go deeper and use functions in Node_t
+     */
     void pop()
     {
-        Node_t<T>* oldTop = m_neste;
-        m_tegn = m_neste->m_tegn;
-        m_neste = m_neste->m_neste;
-        oldTop->m_neste = 0;
+        Node_t<T>* oldTop = m_prev;
+        m_val = m_prev->m_val;
+        m_prev = m_prev->m_prev;
+        oldTop->m_prev = 0;
         delete oldTop;
     }
+    /**
+     * @brief push
+     * @param val
+     * Add a new item to the stack
+     */
     void push(T val)
     {
-        m_neste = new Node_t<T>(m_tegn, m_neste);
-        m_tegn = val;
+        m_prev = new Node_t<T>(m_val, m_prev);
+        m_val = val;
     }
 
-    T hentData() const { return m_tegn; }
+    /**
+     * @brief getVal
+     * @return value contained by current node
+     */
+    T getVal() const { return m_val; }
 
-    bool isLast() { return m_neste == nullptr; }
+    bool isLast() { return m_prev == nullptr; }
+    /**
+     * @brief getSize
+     * @return current size of stack network
+     */
     int getSize() const
     {
         int i = 0;
-        for (const Node_t<T>* cur = this; cur != nullptr; cur = cur->m_neste, i++){}
+        for (const Node_t<T>* cur = this; cur != nullptr; cur = cur->m_prev, i++){}
         return i;
     }
 

@@ -22,33 +22,10 @@ public:
 
         head = new Node_t<T>(ch);
     }
-    stack_t(const stack_t &other) : head()
-    {
-        if (other.isEmpty())
-        { return; }
 
-        head = new Node_t<T>(*other.head);
-    }
     ~stack_t() {
         delete head;
     }
-
-    stack_t &operator= (const stack_t &other)
-    {
-        if (this == &other){
-            return *this;
-        }
-
-        Node_t<T>* newTop = nullptr;
-        if (!other.isEmpty()){
-            newTop = new Node_t<T>(*other.head);
-        }
-        delete head;
-        head = newTop;
-
-        return *this;
-    }
-
 
     /**
      * @brief push
@@ -79,7 +56,7 @@ public:
             std::cout << "Stack is empty.\n";
             return 0;
         }
-        return head->hentData();
+        return head->getVal();
     }
     /**
      * @brief pop
@@ -102,13 +79,19 @@ public:
         return result;
     }
 
+    /**
+     * @brief empty
+     * Self-explanatory name
+     * Just a bunch of successive pop() calls
+     */
     void empty()
     {
+        // Not sure exactly why I needed to set int i to -2, but otherwise it wouldn't check if hentNeste() was a nullptr
         for(int i = -2; i <= head->getSize(); i++)
         {
             if (head == nullptr)
             { break; }
-            if (head->hentNeste() == nullptr){ // if this is the last item to pop, delete the pointer and set head to a nullptr
+            if (head->getPrev() == nullptr){ // if this is the last item to pop, delete the pointer and set head to a nullptr
                 delete head;
                 head = nullptr;
             }
@@ -132,11 +115,11 @@ public:
         if (stack.head != nullptr)
         {
             out << "\nCurrent contents of stack: ";
-            for (Node_t<T>* p = stack.head; p!=nullptr; p=p->hentNeste())
-                out << p->hentData() << " ";
+            for (Node_t<T>* p = stack.head; p!=nullptr; p=p->getPrev())
+                out << p->getVal() << " ";
 
             out << "\nWritten backwards: ";
-            stack.head->skrivBaklengs();
+            stack.head->printReversed();
             out <<'\n';
             return out;
         }

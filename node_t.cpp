@@ -1,6 +1,3 @@
 #include "stack_t.h"
 
-namespace ADS101
-{
-
-}
+namespace ADS101 {}

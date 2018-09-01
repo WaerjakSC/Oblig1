@@ -1,85 +1,72 @@
 #include "stack.h"
-#include <memory>
 #include <iostream>
-
+#include <memory>
 
 namespace ADS101 {
-stack::stack(char ch)
-{
-    head = new CharNode(ch);
-}
+stack::stack(char ch) { head = new CharNode(ch); }
 /**
  * @brief stack::push
  * @param ch
  * Add a new item to the stack
  */
-void stack::push(char ch)
-{
-    auto* tmp = new CharNode(ch, head); // Create a new node with containing the char ch. Constructor sets m_neste to nullptr.
-    //  Make tmp's m_neste point to the top of the stack
-    head = tmp; // Update the new head in stack class
+void stack::push(char ch) {
+  auto *tmp = new CharNode(ch, head);
+  head = tmp;
 }
 /**
  * @brief stack::top
  * @return
  * Returns the last item entered into the stack
  */
-char stack::top()
-{
-    if (head != nullptr)
-    {
-        return head->hentData();
-    }
-    std::cout << "Stack is empty.\n";
-    return 0;
-
+char stack::top() {
+  if (head != nullptr) {
+    return head->hentData();
+  }
+  // Else...
+  std::cout << "Stack is empty.\n";
+  return 0;
 }
 /**
  * @brief stack::pop
  * @return
- * Removes the last item entered into the stack and reads its contents into a variable if needed
+ * Removes the last item entered into the stack and reads its contents into a
+ * variable if needed
  */
-char stack::pop()
-{
-    if (head != nullptr) // If head is not a nullptr (won't run if stack is empty)
-    {
-        CharNode* tmp = head; // Create temporary object of type CharNode pointing to stack head
-        head = head->hentNeste(); // Set the head of the stack to point to the next item in the stack
-        char ch = tmp->hentData(); // store the data in the item into a temporary char
-        delete tmp; // delete the last pointer to that address
+char stack::pop() {
+  if (head != nullptr) {
+    CharNode *tmp = head;
+    head = head->hentNeste();
 
-        return ch; // Return the char in case you want to know what you just deleted
-    }
+    char ch = tmp->hentData();
+    delete tmp;
 
-    std::cout << "Stack is empty, nothing to pop.\n";
-    return 0;
-
+    return ch; // Return the char in case you want to know what you just deleted
+  }
+  // Else...
+  std::cout << "Stack is empty, nothing to pop.\n";
+  return 0;
 }
-
-void stack::empty()
-{
-    CharNode* tmp=head; // Iterative process similar to pop
-    while(tmp != nullptr)
-    {
-        head=head->hentNeste(); // Switch head to point to the next latest item in stack
-        delete tmp; // Delete/free up the address tmp is attached to (leaving no pointers to that address)
-        tmp= head; // repeat process
-    }
+/**
+ * @brief stack::empty
+ * Empties the stack (in hindsight should probably have been just a bool to
+ * check if stack is empty, but I'm leaving it as it is)
+ */
+void stack::empty() {
+  CharNode *tmp = head;
+  while (tmp != nullptr) {
+    head = head->hentNeste();
+    delete tmp;
+    tmp = head;
+  }
 }
 /**
  * @brief stack::size
  * @return Returns the total size of the stack
  */
-int stack::size()
-{
-    return head->hentAntall();
-}
+int stack::size() { return head->hentAntall(); }
 /**
  * @brief stack::getHead
  * @return Getter for top of stack
  */
-CharNode *stack::getHead()
-{
-    return head;
-}
-}
+CharNode *stack::getHead() { return head; }
+} // namespace ADS101

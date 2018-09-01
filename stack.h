@@ -5,18 +5,18 @@
 #include <memory>
 
 namespace ADS101 {
-class stack
-{
+class stack {
 public:
-    stack(char ch = '0');
-    void push(char ch);
-    char top();
-    char pop();
-    void empty();
-    int size();
-    CharNode* getHead();
+  stack(char ch = '0');
+  void push(char ch);
+  char top();
+  char pop();
+  void empty();
+  int size();
+  CharNode *getHead();
+
 private:
-    CharNode* head;
+  CharNode *head;
 };
-}
+} // namespace ADS101
 #endif // STACK_H

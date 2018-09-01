@@ -4,24 +4,23 @@
 #define CHARNODE_H
 #include <string>
 
-
 namespace ADS101 {
-    class stack;
-    class CharNode
-    {
-    public:
-        CharNode(char tegn='0', CharNode* neste=nullptr);
-        std::string toString() const;
-        CharNode* hentNeste() const;
-        void settNeste(CharNode* c);
-        void skrivBaklengs() const;
-        static int hentAntall();
-        char hentData() const;
-        ~CharNode();
-    private:
-        char m_tegn;            // Data-del
-        static int s_antall;
-        CharNode* m_neste;      // Datastruktur-del
-    };
-}
+class stack;
+class CharNode {
+public:
+  CharNode(char tegn = '0', CharNode *neste = nullptr);
+  std::string toString() const;
+  CharNode *hentNeste() const;
+  void settNeste(CharNode *c);
+  void skrivBaklengs() const;
+  static int hentAntall();
+  char hentData() const;
+  ~CharNode();
+
+private:
+  char m_tegn; // Data-del
+  static int s_antall;
+  CharNode *m_neste; // Datastruktur-del
+};
+} // namespace ADS101
 #endif // CHARNODE_H

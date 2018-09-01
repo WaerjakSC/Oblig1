@@ -49,7 +49,7 @@ public:
      * @return
      * Returns the last item entered into the stack
      */
-    T top()
+    T top() const
     {
         if (isEmpty())
         {
